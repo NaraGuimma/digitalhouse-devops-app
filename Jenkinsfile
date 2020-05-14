@@ -91,7 +91,7 @@ pipeline {
                 script {
                     if(env.GIT_BRANCH=='origin/homolog'){
  
-                        docker.withRegistry('690998955571.dkr.ecr.us-east-1.amazonaws.com', 'ecr:us-east-1:homologs3') {
+                        docker.withRegistry('690998955571.dkr.ecr.us-east-1.amazonaws.com', 'ecr:us-east-1:awskey') {
                             docker.image('digitalhouse-devops').pull()
                         }
 
