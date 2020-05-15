@@ -96,7 +96,7 @@ pipeline {
                         }
 
                         echo 'Deploy para Homologacao'
-                        if(env.GIT_PREVIOUS_SUCCESSFUL_COMMIT ==  null){
+                        if(containerId ==  null){
                                 sh "hostname"
                                 sh "docker stop app1"
                                 sh "docker rm app1"
