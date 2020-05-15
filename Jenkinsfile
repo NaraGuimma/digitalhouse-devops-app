@@ -47,7 +47,7 @@ pipeline {
                     steps {
                         script {
                             print "Environment will be : ${env.NODE_ENV}"
-                            docker.build("digitalhouse-devops: ${env.BUILD_ID}")
+                            docker.build("digitalhouse-devops: ${env.BUILD_ID}", "-f ${dockerfile} ./dockerfiles")
                         }
                     }
                 }
