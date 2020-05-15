@@ -96,16 +96,13 @@ pipeline {
                         }
 
                         echo 'Deploy para Homologacao'
-                        sh "docker swarm init"
                         def inspectExitCode = sh script: "docker service inspect loginService", returnStatus: true
                         if (inspectExitCode == 0) {
                                 sh "hostname"
                                 sh "docker stop app1"
                                 sh "docker rm app1"
-                            } else {
-                                sh "hostname"
-                            }
-                            
+                        }
+                        sh "hostname" 
                         //sh "docker run -d --name app1 -p 8030:3000 933273154934.dkr.ecr.us-east-1.amazonaws.com/digitalhouse-devops:latest"
                         withCredentials([[$class:'AmazonWebServicesCredentialsBinding' 
                             , credentialsId: 'homologs3']]) {
