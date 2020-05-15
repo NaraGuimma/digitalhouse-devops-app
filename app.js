@@ -14,6 +14,8 @@ dotenv.config();
 console.log('process.env.AWS_ACCESS_KEY', process.env.AWS_ACCESS_KEY)
 console.log('process.env.AWS_SECRET_ACCESS_KEY', process.env.AWS_SECRET_ACCESS_KEY)
 console.log('process.env.REGION', process.env.REGION)
+console.log('process.env.BUILD_ID', process.env.BUILD_ID)
+
 
 AWS.config.update({
     accessKeyId: process.env.AWS_ACCESS_KEY,
@@ -74,7 +76,7 @@ app.post('/file-upload', upload.single('imageUpload'), (req, res) => {
             throw s3Err
         }
         console.log(`File uploaded successfully at ${data.Location}`)
-        res.redirect("/?upload image version-" process.env.BUILD_ID "-Ok=true");
+        res.redirect("/?uploadOk=true" +process.env.BUILD_ID");
     });
 })
 
