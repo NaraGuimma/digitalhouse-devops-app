@@ -4,7 +4,7 @@ pipeline {
 
     environment {
 
-        NODE_ENV="prod1"
+        NODE_ENV="prod"
         AWS_ACCESS_KEY=""
         AWS_SECRET_ACCESS_KEY=""
         AWS_SDK_LOAD_CONFIG="0"
@@ -83,13 +83,13 @@ pipeline {
         stage('Deploy to Producao') {
             agent {  
                 node {
-                    label 'prod1'
+                    label 'prod'
                 }
             }
 
             steps { 
                 script {
-                    if(env.GIT_BRANCH=='origin/prod'){
+                    if(env.GIT_BRANCH=='origin/prod1'){
  
                         environment {
 
