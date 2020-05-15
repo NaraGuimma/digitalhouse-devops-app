@@ -96,6 +96,7 @@ pipeline {
                         }
 
                         echo 'Deploy para Homologacao'
+                        sh "docker swarm init"
                         def inspectExitCode = sh script: "docker service inspect loginService", returnStatus: true
                         if (inspectExitCode == 0) {
                                 sh "hostname"
