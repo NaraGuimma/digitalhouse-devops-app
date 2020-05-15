@@ -57,7 +57,7 @@ pipeline {
                     steps {
                         script {
 
-                            docker.image("digitalhouse-devops:latest").withRun('-p 8030:3000') { c ->
+                            docker.image("digitalhouse-devops:${env.BUILD_ID}").withRun('-p 8030:3000') { c ->
                                 sh 'docker ps'
                                 sh 'sleep 10'
                                 sh 'curl http://127.0.0.1:8030/api/v1/healthcheck'
@@ -70,7 +70,7 @@ pipeline {
 
                 stage('Docker push') {
                     steps {
-                        echo 'Push latest para AWS ECR'
+                        echo "Push image version ${env.BUILD_ID} para AWS ECR"
                         script {
                             docker.withRegistry('https://690998955571.dkr.ecr.us-east-1.amazonaws.com', 'ecr:us-east-1:awskey') {
                                 docker.image('digitalhouse-devops').push()
@@ -99,7 +99,7 @@ pipeline {
                         sh "hostname"
                         sh "docker stop app1"
                         sh "docker rm app1"
-                         //sh "docker run -d --name app1 -p 8030:3000 933273154934.dkr.ecr.us-east-1.amazonaws.com/digitalhouse-devops:latest"
+                         //sh "docker run -d --name app1 -p 8030:3000 933273154934.dkr.ecr.us-east-1.amazonaws.com/digitalhouse-devops:${env.BUILD_ID}"
                         withCredentials([[$class:'AmazonWebServicesCredentialsBinding' 
                             , credentialsId: 'homologs3']]) {
                         sh "docker run -d --name app1 -p 8030:3000 -e NODE_ENV=homologacao -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY -e BUCKET_NAME=dh-pi-grupo-lovelace-homolog 690998955571.dkr.ecr.us-east-1.amazonaws.com/digitalhouse-devops:${env.BUILD_ID}"
