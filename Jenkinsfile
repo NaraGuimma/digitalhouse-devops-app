@@ -96,8 +96,7 @@ pipeline {
                         }
 
                         echo 'Deploy para Homologacao'
-                        def inspectExitCode = sh script: "docker service inspect loginService", returnStatus: true
-                        if (inspectExitCode == 0) {
+                        if(env.GIT_PREVIOUS_SUCCESSFUL_COMMIT !=  null){
                                 sh "hostname"
                                 sh "docker stop app1"
                                 sh "docker rm app1"
