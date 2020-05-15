@@ -4,7 +4,7 @@ pipeline {
 
     environment {
 
-        NODE_ENV="prod"
+        NODE_ENV="prod1"
         AWS_ACCESS_KEY=""
         AWS_SECRET_ACCESS_KEY=""
         AWS_SDK_LOAD_CONFIG="0"
@@ -80,46 +80,10 @@ pipeline {
             }
         }
 
-        stage('Deploy to Homolog') {
-            agent {  
-                node {
-                    label 'homolog'
-                }
-            }
-
-            steps { 
-                script {
-                    if(env.GIT_BRANCH=='origin/homolog'){
- 
-                        docker.withRegistry('http://690998955571.dkr.ecr.us-east-1.amazonaws.com', 'ecr:us-east-1:awskey') {
-                            docker.image('digitalhouse-devops').pull()
-                        }
-
-                        echo 'Deploy para Homologacao'
-                        sh "hostname"
-                
-                        sh "docker stop app1"
-                        sh "docker rm app1"
-                        //sh "docker run -d --name app1 -p 8030:3000 933273154934.dkr.ecr.us-east-1.amazonaws.com/digitalhouse-devops:latest"
-                        withCredentials([[$class:'AmazonWebServicesCredentialsBinding' 
-                            , credentialsId: 'homologs3']]) {
-                        sh "docker run -d --name app1 -p 8030:3000 -e NODE_ENV=homolog -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY -e BUCKET_NAME=dh-pi-grupo-lovelace-homolog 690998955571.dkr.ecr.us-east-1.amazonaws.com/digitalhouse-devops:latest"
-                        }
-                        
-                        sh "docker ps"
-                        sh 'sleep 10'
-                        sh 'curl http://ec2-54-157-106-57.compute-1.amazonaws.com:8030/api/v1/healthcheck'
-
-                    }
-                }
-            }
-
-        }
-
         stage('Deploy to Producao') {
             agent {  
                 node {
-                    label 'prod'
+                    label 'prod1'
                 }
             }
 
