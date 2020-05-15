@@ -76,7 +76,7 @@ app.post('/file-upload', upload.single('imageUpload'), (req, res) => {
             throw s3Err
         }
         console.log(`File uploaded successfully at ${data.Location}`)
-        res.redirect("/?uploadOk=true" +process.env.BUILD_ID");
+        res.redirect("/?uploadOk=true");
     });
 })
 
