@@ -98,7 +98,7 @@ pipeline {
                         echo 'Deploy para Homologacao'
                         sh "hostname"
                         //sh "docker stop app1 || true && docker rm rabbitmq || app1"
-                        if("sh 'docker ps'") != null){
+                        if("sh 'docker ps'")!=null){
                             sh "docker stop app1 || true && docker rm rabbitmq || app1"    
                         }                         
                         //sh "docker stop app1"
