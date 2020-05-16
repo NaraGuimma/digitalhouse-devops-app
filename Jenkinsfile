@@ -98,10 +98,12 @@ pipeline {
                         echo 'Deploy para Homologacao'
                         sh "hostname"
                         //sh "docker stop app1 || true && docker rm rabbitmq || app1"
-                        teste=sh "docker ps"                        
-                        //sh "docker stop app1"
-                        //sh "docker rm app1"
-                         //sh "docker run -d --name app1 -p 80:3000 933273154934.dkr.ecr.us-east-1.amazonaws.com/digitalhouse-devops:${env.BUILD_ID}"
+                        echo '***************Testando variaveis*****************'
+                        teste=sh "docker ps -q --filter "name=app1""    
+                        echo 'teste'
+                        sh "docker stop app1"
+                        sh "docker rm app1"
+                        sh "docker run -d --name app1 -p 80:3000 933273154934.dkr.ecr.us-east-1.amazonaws.com/digitalhouse-devops:${env.BUILD_ID}"
                         withCredentials([[$class:'AmazonWebServicesCredentialsBinding' 
                             , credentialsId: 'homologs3']]) {
                         sh "docker run -d --name app1 -p 80:3000 -e NODE_ENV=homologacao -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY -e BUCKET_NAME=dh-pi-grupo-lovelace-homolog 690998955571.dkr.ecr.us-east-1.amazonaws.com/digitalhouse-devops:${env.BUILD_ID}"
