@@ -101,9 +101,11 @@ pipeline {
                         echo '***************Testando variaveis*****************'
                         teste=sh "docker ps -q --filter 'name=app1'"    
                         print "${teste}"
-                        if(test!=null){
-                            sh "docker stop app1"
-                            sh "docker rm app1"                            
+                        steps {
+                            if(test!=null){
+                                sh "docker stop app1"
+                                sh "docker rm app1"                            
+                            }
                         }
                         sh "docker run -d --name app1 -p 80:3000 690998955571.dkr.ecr.us-east-1.amazonaws.com/digitalhouse-devops:${env.BUILD_ID}"
                         withCredentials([[$class:'AmazonWebServicesCredentialsBinding' 
