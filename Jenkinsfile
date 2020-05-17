@@ -47,7 +47,7 @@ pipeline {
                     steps {
                         script {
                             print "Environment will be : ${env.NODE_ENV}"
-                            docker.build("digitalhouse-devops:latest")
+                            docker.build("digitalhouse-devops:${env.NODE_ENV}-${env.BUILD_ID}")
                         }
                     }
                 }
@@ -72,7 +72,7 @@ pipeline {
                         echo 'Push latest para AWS ECR'
                         script {
                             docker.withRegistry('http://690998955571.dkr.ecr.us-east-1.amazonaws.com', 'ecr:us-east-1:awskey') {
-                                docker.image('digitalhouse-devops').push()
+                                docker.image('digitalhouse-devops:${env.NODE_ENV}-${env.BUILD_ID}').push()
                             }
                         }
                     }
@@ -90,22 +90,9 @@ pipeline {
             steps { 
                 script {
                     if(env.GIT_BRANCH=='origin/prod1'){
- 
-                        environment {
-
-                            NODE_ENV="production"
-                            AWS_ACCESS_KEY="123456"
-                            AWS_SECRET_ACCESS_KEY="asdfghjkkll"
-                            AWS_SDK_LOAD_CONFIG="0"
-                            BUCKET_NAME="app-digital"
-                            REGION="us-east-1" 
-                            PERMISSION=""
-                            ACCEPTED_FILE_FORMATS_ARRAY=""
-                        }
-
 
                         docker.withRegistry('https://690998955571.dkr.ecr.us-east-1.amazonaws.com', 'ecr:us-east-1:awskey') {
-                            docker.image('digitalhouse-devops').pull()
+                            docker.image('digitalhouse-devops:${env.NODE_ENV}-${env.BUILD_ID}').pull()
                         }
 
                         echo 'Deploy para Producao'
@@ -115,7 +102,7 @@ pipeline {
                         //sh "docker run -d --name app1 -p 8030:3000 933273154934.dkr.ecr.us-east-1.amazonaws.com/digitalhouse-devops:latest"
                         withCredentials([[$class:'AmazonWebServicesCredentialsBinding' 
                             , credentialsId: 'prods3']]) {
-                          sh "docker run -d --name app1 -p 8030:3000 -e NODE_ENV=producao -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY -e BUCKET_NAME=dh-pi-grupo-lovelace-prod 690998955571.dkr.ecr.us-east-1.amazonaws.com/digitalhouse-devops:latest"
+                          sh "docker run -d --name app1 -p 8030:3000 -e NODE_ENV=producao -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY -e BUCKET_NAME=dh-pi-grupo-lovelace-prod 690998955571.dkr.ecr.us-east-1.amazonaws.com/digitalhouse-devops:${env.NODE_ENV}-${env.BUILD_ID}"
                         }
                         sh "docker ps"
                         sh 'sleep 10'
