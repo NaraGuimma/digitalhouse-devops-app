@@ -98,12 +98,11 @@ pipeline {
                         echo 'Deploy para Homologacao'
                         sh "hostname"
                         //sh "docker stop app1 || true && docker rm rabbitmq || app1"
-                        echo '***************Testando variaveis*****************'
-                        
-                        sh "docker ps -q --filter 'name=app2'"  
-                        teste=sh "docker ps -aqf 'name=app2'"                        
-                        print "valor do meu app2: ${env.teste}"                    
+                        echo '***************Testando variaveis*****************'                    
                         script {
+                            sh "docker ps -q --filter 'name=app2'"  
+                            teste=sh "docker ps -aqf 'name=app2'"                        
+                            print "valor do meu app2: ${env.teste}"
                             if(env.teste!=null){
                                 sh "docker stop app2"
                                 sh "docker rm app2"                            
