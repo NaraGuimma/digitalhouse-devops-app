@@ -48,7 +48,7 @@ pipeline {
                         script {
                             print "Environment will be : ${env.NODE_ENV}"
                             //print "${env.BUILD_ID}"
-                            docker.build("digitalhouse-devops:${env.BUILD_ID}")
+                            docker.build("digitalhouse-devops:${env.NODE_ENV}-${env.BUILD_ID}")
                         }
                     }
                 }
