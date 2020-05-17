@@ -56,7 +56,7 @@ pipeline {
                     steps {
                         script {
 
-                            docker.image("digitalhouse-devops:latest").withRun('-p 8030:3000') { c ->
+                            docker.image("digitalhouse-devops:${env.NODE_ENV}-${env.BUILD_ID}").withRun('-p 8030:3000') { c ->
                                 sh 'docker ps'
                                 sh 'sleep 10'
                                 sh 'curl http://127.0.0.1:8030/api/v1/healthcheck'
@@ -69,7 +69,7 @@ pipeline {
 
                 stage('Docker push') {
                     steps {
-                        echo 'Push latest para AWS ECR'
+                        echo 'Push ${env.NODE_ENV}-${env.BUILD_ID} para AWS ECR'
                         script {
                             docker.withRegistry('http://690998955571.dkr.ecr.us-east-1.amazonaws.com', 'ecr:us-east-1:awskey') {
                                 docker.image('digitalhouse-devops:${env.NODE_ENV}-${env.BUILD_ID}').push()
