@@ -20,12 +20,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bgsouza/digitalhouse-devops-app.git"
+    "url": "git+https://github.com/NaraGuimma/digitalhouse-devops-app-Lovelace.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/bgsouza/digitalhouse-devops-app/issues"
+    "url": "https://github.com/NaraGuimma/digitalhouse-devops-app-Lovelace/issues"
   },
-  "homepage": "https://github.com/bgsouza/digitalhouse-devops-app#readme"
+  "homepage": "https://github.com/NaraGuimma/digitalhouse-devops-app-Lovelace#readme"
 }
