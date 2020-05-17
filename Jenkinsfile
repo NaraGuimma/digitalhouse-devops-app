@@ -101,7 +101,7 @@ pipeline {
                         echo '***************Testando variaveis*****************'
                         teste=sh "docker ps -q --filter 'name=app1'"    
                         print "${teste}"
-                        steps {
+                        script {
                             if("${teste}"!=null){
                                 sh "docker stop app1"
                                 sh "docker rm app1"                            
