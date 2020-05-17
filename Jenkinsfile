@@ -69,10 +69,10 @@ pipeline {
 
                 stage('Docker push') {
                     steps {
-                        echo 'Push ${env.NODE_ENV}-${env.BUILD_ID} para AWS ECR'
+                        echo "Push ${env.NODE_ENV}-${env.BUILD_ID} para AWS ECR"
                         script {
                             docker.withRegistry('http://690998955571.dkr.ecr.us-east-1.amazonaws.com', 'ecr:us-east-1:awskey') {
-                                docker.image('digitalhouse-devops:${env.NODE_ENV}-${env.BUILD_ID}').push()
+                                docker.image("digitalhouse-devops:${env.NODE_ENV}-${env.BUILD_ID}").push()
                             }
                         }
                     }
@@ -92,7 +92,7 @@ pipeline {
                     if(env.GIT_BRANCH=='origin/prod1'){
 
                         docker.withRegistry('https://690998955571.dkr.ecr.us-east-1.amazonaws.com', 'ecr:us-east-1:awskey') {
-                            docker.image('digitalhouse-devops:${env.NODE_ENV}-${env.BUILD_ID}').pull()
+                            docker.image("digitalhouse-devops:${env.NODE_ENV}-${env.BUILD_ID}").pull()
                         }
 
                         echo 'Deploy para Producao'
