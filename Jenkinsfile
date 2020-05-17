@@ -102,7 +102,7 @@ pipeline {
                         teste=sh "docker ps -q --filter 'name=app1'"    
                         print "${teste}"
                         script {
-                            if("${teste}"!=null){
+                            if(teste!=null){
                                 sh "docker stop app1"
                                 sh "docker rm app1"                            
                             }
