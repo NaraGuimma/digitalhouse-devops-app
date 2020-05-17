@@ -56,10 +56,10 @@ pipeline {
                     steps {
                         script {
 
-                            docker.image("digitalhouse-devops:latest").withRun('-p 8030:3000') { c ->
+                            docker.image("digitalhouse-devops:latest").withRun('-p 80:3000') { c ->
                                 sh 'docker ps'
                                 sh 'sleep 10'
-                                sh 'curl http://127.0.0.1:8030/api/v1/healthcheck'
+                                sh 'curl http://127.0.0.1:80/api/v1/healthcheck'
                                 
                             }
                     
@@ -102,12 +102,12 @@ pipeline {
                         //sh "docker run -d --name app1 -p 8030:3000 933273154934.dkr.ecr.us-east-1.amazonaws.com/digitalhouse-devops:latest"
                         withCredentials([[$class:'AmazonWebServicesCredentialsBinding' 
                             , credentialsId: 'homologs3']]) {
-                        sh "docker run -d --name app1 -p 8030:3000 -e NODE_ENV=homologacao -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY -e BUCKET_NAME=dh-pi-grupo-lovelace-homolog 690998955571.dkr.ecr.us-east-1.amazonaws.com/digitalhouse-devops:latest"
+                        sh "docker run -d --name app1 -p 80:3000 -e NODE_ENV=homologacao -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY -e BUCKET_NAME=dh-pi-grupo-lovelace-homolog 690998955571.dkr.ecr.us-east-1.amazonaws.com/digitalhouse-devops:latest"
                         }
                         
                         sh "docker ps"
                         sh 'sleep 10'
-                        sh 'curl http://ec2-54-157-106-57.compute-1.amazonaws.com:8030/api/v1/healthcheck'
+                        sh 'curl http://ec2-54-157-106-57.compute-1.amazonaws.com:80/api/v1/healthcheck'
 
                     }
                 }
@@ -150,11 +150,11 @@ pipeline {
                         //sh "docker run -d --name app1 -p 8030:3000 933273154934.dkr.ecr.us-east-1.amazonaws.com/digitalhouse-devops:latest"
                         withCredentials([[$class:'AmazonWebServicesCredentialsBinding' 
                             , credentialsId: 'prods3']]) {
-                          sh "docker run -d --name app1 -p 8030:3000 -e NODE_ENV=producao -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY -e BUCKET_NAME=dh-pi-grupo-lovelace-prod 690998955571.dkr.ecr.us-east-1.amazonaws.com/digitalhouse-devops:latest"
+                          sh "docker run -d --name app1 -p 80:3000 -e NODE_ENV=producao -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY -e BUCKET_NAME=dh-pi-grupo-lovelace-prod 690998955571.dkr.ecr.us-east-1.amazonaws.com/digitalhouse-devops:latest"
                         }
                         sh "docker ps"
                         sh 'sleep 10'
-                        sh 'curl http://ec2-18-208-209-81.compute-1.amazonaws.com:8030/api/v1/healthcheck'
+                        sh 'curl http://ec2-18-208-209-81.compute-1.amazonaws.com:80/api/v1/healthcheck'
 
                     }
                 }
