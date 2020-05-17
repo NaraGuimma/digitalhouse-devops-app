@@ -119,7 +119,7 @@ pipeline {
                         }
                         sh "docker ps"
                         sh 'sleep 10'
-                        sh 'curl http://ec2-18-208-209-81.compute-1.amazonaws.com:8030/api/v1/healthcheck'
+                        sh 'curl http://ec2-54-204-77-140.compute-1.amazonaws.com:8030/api/v1/healthcheck'
 
                     }
                 }
