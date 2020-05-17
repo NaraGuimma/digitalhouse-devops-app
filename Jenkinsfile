@@ -35,7 +35,7 @@ pipeline {
                 stage('Clone repository') {
                     steps {
                         script {
-                            if(env.GIT_BRANCH=='origin/prod'){
+                            if(env.GIT_BRANCH=='origin/prod1'){
                                 checkout scm
                             }
                             sh('printenv | sort')
