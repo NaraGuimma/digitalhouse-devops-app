@@ -101,8 +101,7 @@ pipeline {
                         echo '***************Testando variaveis*****************'
                         
                         sh "docker ps -q --filter 'name=app1'"  
-                        
-                        teste=sh "docker id -q --filter 'name=app1'"    
+                        teste=sh "docker ps -aqf 'name=^app1$'"    
                         
                         print "valor do meu app1: ${teste}"
                         script {
