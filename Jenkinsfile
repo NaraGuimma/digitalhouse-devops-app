@@ -106,17 +106,17 @@ pipeline {
                                 sh "docker stop app1"
                                 sh "docker rm app1"                            
                             }
-                        }
-                        sh "docker run -d --name app1 -p 80:3000 690998955571.dkr.ecr.us-east-1.amazonaws.com/digitalhouse-devops:${env.BUILD_ID}"
-                        withCredentials([[$class:'AmazonWebServicesCredentialsBinding' 
-                            , credentialsId: 'homologs3']]) {
-                        sh "docker run -d --name app1 -p 80:3000 -e NODE_ENV=homologacao -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY -e BUCKET_NAME=dh-pi-grupo-lovelace-homolog 690998955571.dkr.ecr.us-east-1.amazonaws.com/digitalhouse-devops:${env.BUILD_ID}"
-                        }
-                        
-                        sh "docker ps"
-                        sh 'sleep 10'
-                        sh 'curl http://ec2-3-84-5-112.compute-1.amazonaws.com:80/api/v1/healthcheck'
+                            sh "docker run -d --name app1 -p 80:3000 690998955571.dkr.ecr.us-east-1.amazonaws.com/digitalhouse-devops:${env.BUILD_ID}"
+                            withCredentials([[$class:'AmazonWebServicesCredentialsBinding' 
+                                , credentialsId: 'homologs3']]) {
+                            sh "docker run -d --name app1 -p 80:3000 -e NODE_ENV=homologacao -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY -e BUCKET_NAME=dh-pi-grupo-lovelace-homolog 690998955571.dkr.ecr.us-east-1.amazonaws.com/digitalhouse-devops:${env.BUILD_ID}"
+                            }
 
+                            sh "docker ps"
+                            sh 'sleep 10'
+                            sh 'curl http://ec2-3-84-5-112.compute-1.amazonaws.com:80/api/v1/healthcheck'                        
+
+                        }                      
                     }
                 }
             }
