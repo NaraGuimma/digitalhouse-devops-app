@@ -102,8 +102,7 @@ pipeline {
                         
                         sh "docker ps -q --filter 'name=app2'"  
                         teste=sh "docker ps -aqf 'name=app2'"                        
-                        print "valor do meu app2: ${env.teste}"
-                        echo sh "docker ps -aqf 'name=app2'"                        
+                        print "valor do meu app2: ${env.teste}"                    
                         script {
                             if(${env.teste}!=null){
                                 sh "docker stop app2"
