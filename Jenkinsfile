@@ -99,8 +99,12 @@ pipeline {
                         sh "hostname"
                         //sh "docker stop app1 || true && docker rm rabbitmq || app1"
                         echo '***************Testando variaveis*****************'
+                        
+                        sh "docker ps -q --filter 'name=app1'"  
+                        
                         teste=sh "docker ps -q --filter 'name=app1'"    
-                        print "${teste}"
+                        
+                        print "valor do meu app1: ${teste}"
                         script {
                             if(teste!=null){
                                 sh "docker stop app1"
