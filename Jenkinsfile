@@ -105,7 +105,7 @@ pipeline {
                         print "valor do meu app2: ${env.teste}"
                         echo sh "docker ps -aqf 'name=app2'"                        
                         script {
-                            if(teste!=null){
+                            if(${env.teste}!=null){
                                 sh "docker stop app2"
                                 sh "docker rm app2"                            
                             }
