@@ -60,10 +60,8 @@ pipeline {
                             docker.image("digitalhouse-devops:${env.NODE_ENV}-${env.BUILD_ID}").withRun('-p 8030:3000') { c ->
                                 sh 'docker ps'
                                 sh 'sleep 10'
-                                sh 'curl http://127.0.0.1:8030/api/v1/healthcheck'
-                                
+                                sh 'curl http://127.0.0.1:8030/api/v1/healthcheck'           
                             }
-                    
                         }
                     }
                 }
