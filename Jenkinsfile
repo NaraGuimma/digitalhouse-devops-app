@@ -81,27 +81,27 @@ pipeline {
 
 
 
-stage('Deploy to Homolog') {
+stage('Deploy to Prod') {
             agent {  
                 node {
-                    label 'homolog'
+                    label 'prod'
                 }
             }
             steps { 
                 script {
-                    if(env.GIT_BRANCH=='origin/homolog1'){
+                    if(env.GIT_BRANCH=='origin/prod1'){
  
                         docker.withRegistry('https://690998955571.dkr.ecr.us-east-1.amazonaws.com', 'ecr:us-east-1:awskey') {
                             docker.image("digitalhouse-devops:${env.NODE_ENV}-${env.BUILD_ID}").pull()
                         }
 
-                        echo 'Deploy para Homologacao'
+                        echo 'Deploy para Produçao'
                         sh "hostname"
                         sh "docker ps -q --filter 'name=app1' | grep -q . && docker stop app1 && docker rm -fv app1"
                         withCredentials([[$class:'AmazonWebServicesCredentialsBinding' 
-                            , credentialsId: 'homologs3']]) {
-                        sh "docker run -d --name app1 -p 8030:3000 -e NODE_ENV=homologacao -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID 
-                            , -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY -e BUCKET_NAME=dh-pi-grupo-lovelace-homolog 
+                            , credentialsId: 'prods3']]) {
+                        sh "docker run -d --name app1 -p 8030:3000 -e NODE_ENV=producao -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID 
+                            , -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY -e BUCKET_NAME=dh-pi-grupo-lovelace-prod 
                             , 690998955571.dkr.ecr.us-east-1.amazonaws.com/digitalhouse-devops:${env.NODE_ENV}-${env.BUILD_ID}"
                         }
 
